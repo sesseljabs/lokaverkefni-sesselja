@@ -28,10 +28,24 @@ class Node:
         if self.left != None:
             total += int(self.left.state)
                 
-        print(total)
+        return total
+    def delete(self):
+        if self.top:
+            if self.top.bottom:
+                self.top.bottom = None
+        if self.left:
+            if self.left.right:
+                self.left.right = None
+        if self.right:
+            if self.right.left:
+                self.right.left = None
+        if self.bottom:
+            if self.bottom.top:
+                self.bottom.top = None
+        self = None
     def __str__(self):
         if self.state:
-            return "■"
+            return " ■ "
         else:
-            return "#"
+            return " # "
 
