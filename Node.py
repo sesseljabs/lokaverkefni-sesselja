@@ -47,5 +47,5 @@ class Node:
         if self.state:
             return " ■ "
         else:
-            return " # "
+            return "   "
 

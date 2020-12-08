@@ -1,4 +1,6 @@
 from Node import Node
+import os
+from time import sleep
 
 class Grid:
     # init, you can create an empty grid if you specify initialize with true
@@ -43,8 +45,19 @@ class Grid:
                 x+=1
             current = current.bottom
             y+=1
+    def listfromfile(self, filename): #takes grid from txt file
+        # file has to be txt with 0 or 1 depending on state and a space between all numbers
+        with open(filename,'r') as file:
+            lines = file.readlines()
+            for i in range(len(lines)):
+                lines[i] = lines[i].rstrip("\n")
+                lines[i] = lines[i].split(sep=" ")
+                lines[i] = list(map(int,lines[i]))
+
+
+            self.copylist(lines)
     
-    def frame(self):
+    def frame(self): # calculates every node
         new = [[0 for i in range(self.width)] for i in range(self.height)]
         x = 0
         y = 0
@@ -80,7 +93,7 @@ class Grid:
             current = current.bottom
 
 
-    def printgrid(self):
+    def printgrid(self): # prints the grid
         current = self.root
         while current != None:
             more = current
@@ -89,20 +102,12 @@ class Grid:
                 more = more.right
             current = current.bottom
             print("", end="\n")
-            
 
-
-listi = [
-    [0,0,0,0,0],
-    [0,1,1,1,0],
-    [0,1,1,1,0],
-    [0,1,1,1,0],
-    [0,0,0,0,0]
-]
-a = Grid(5,5)
-a.copylist(listi)
-a.printgrid()
-a.frame()
-print("\n\n")
-a.printgrid()
+    def gridrun(self, generations=-1): #optional, generation specifies how often to update, -1 means forever
+        count = 0
+        while count <= generations or generations == -1:
+            self.printgrid()
+            sleep(0.1)
+            os.system('cls' if os.name == 'nt' else 'clear')
+            self.frame()
 
